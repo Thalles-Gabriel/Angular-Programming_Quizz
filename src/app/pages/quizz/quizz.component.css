@@ -1,0 +1,15 @@
+article[aria-busy=true] {
+  font-size: 5em;
+}
+
+div, article, nav{
+  text-align: center;
+}
+
+ul {
+  margin: auto !important;
+}
+
+.grid {
+  grid-template-columns: 1fr;
+}

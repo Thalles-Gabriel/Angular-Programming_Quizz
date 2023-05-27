@@ -1,0 +1,46 @@
+<div class="headings">
+  <h1>Programming Quizz</h1>
+  <nav>
+    <ul>
+      <li>
+        <a href="https://www.linkedin.com/in/thalles-gpoliveira/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <fa-icon [icon]="linkedinIcon"></fa-icon>
+          Linkedin
+        </a>
+      </li>
+      <li>
+        <a href="https://www.github.com/Thalles-Gabriel"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <fa-icon [icon]="githubIcon"></fa-icon>
+          Github
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <nav>
+    <ul>
+      <li>
+        <a role="button"
+          class="contrast"
+          routerLink="/"
+        >
+          Home
+        </a>
+      </li>
+      <li>
+        <a role="button"
+          [routerLink]="['/quizz']"
+          [queryParams]="{category: '', difficulty: '', limit: ''}"
+          class="outline"
+        >
+          Quizz Aleatório
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

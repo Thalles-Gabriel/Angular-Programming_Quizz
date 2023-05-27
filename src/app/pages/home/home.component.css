@@ -1,0 +1,17 @@
+.grid {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.container {
+  text-align: center;
+}
+
+.grid > label[for=inputLimit] {
+  grid-column: 2;
+}
+
+select {
+  max-width: 9ch;
+  text-align: center;
+  margin-top: 1em;
+}
