@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Escolha as opções de quizz desejadas</h2>
+  <h5>Ou nenhuma para obter um quizz aleatório</h5>
+  <div>
+    <article class="grid">
+      <ng-container *ngFor="let categoryParam of parameters.apiCategories; index as i">
+        <label [htmlFor]="'radCategory' + i">
+          {{categoryParam}}
+          <input
+            [id]="'radCategory' + i"
+            type="radio"
+            [value]="categoryParam"
+            name="category-option"
+            (click)="setCategory($event)"
+          >
+        </label>
+      </ng-container>
+    </article>
+  </div>
+  <br>
+  <article class="grid">
+    <ng-container *ngFor="let difficultyParam of parameters.apiDifficulties; index as i">
+      <label [htmlFor]="'radDifficulty' + i">
+        {{difficultyParam}}
+        <input
+          type="radio"
+          [id]="'radDifficulty' + i"
+          [value]="difficultyParam"
+          name="difficulty-option"
+          (click)="setDifficulty($event)"
+        >
+      </label>
+    </ng-container>
+  </article>
+  <br>
+  <article class="grid">
+    <label for="inputLimit" (change)="setLimit($event)">
+      Escolha o número de questões
+      <select name="inputLimit">
+        <ng-container *ngFor="let limitValue of parameters.apiLimit; last as max">
+          <option [value]="limitValue" [selected]="max">
+            {{limitValue}}
+          </option>
+        </ng-container>
+      </select>
+    </label>
+  </article>
+  <br>
+  <button
+    type="button"
+    [routerLink]="['/quizz']"
+    [queryParams]="{category: category, difficulty: difficulty, limit: limit}">
+    Começar o quizz!
+  </button>
+</div>

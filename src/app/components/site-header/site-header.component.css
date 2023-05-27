@@ -1,0 +1,15 @@
+div, nav, ul{
+  text-align: center;
+}
+
+h1 {
+  margin-top: 1rem;
+}
+
+ul li {
+  list-style: none;
+}
+
+ul {
+  margin: auto !important;
+}

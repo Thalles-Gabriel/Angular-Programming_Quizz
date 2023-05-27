@@ -1,0 +1,54 @@
+<article [hidden]="apiResponse" aria-busy="true">
+  Loading...
+</article>
+<div class="container" [hidden]="!currentQuestion">
+  <div class="grid" [hidden]="isOver">
+    <article class="headings">
+      <h2>{{currentQuestion.category}}</h2>
+      <hr>
+      <br>
+      <h3>{{currentQuestion.question}}</h3>
+    </article>
+    <fieldset>
+      <div *ngFor="let answers of currentQuestion.answers | keyvalue">
+        <label for="{{answers.key}}" *ngIf="answers.value">
+          <input [type]="currentQuestion.multiple_correct_answers ? 'radio' : 'checkbox'" name="quizz-answers"
+            [value]="answers.value" [id]="answers.key" (change)="selectAnswer($event)">
+            {{answers.value}}
+        </label>
+      </div>
+    </fieldset>
+
+    <nav>
+      <ul>
+        <li>
+          <button type="button" class="secondary" [disabled]="currentPage < 2" (click)="previousQuestion()">
+            Anterior
+          </button>
+        </li>
+        <li>
+          <span>
+            {{currentPage}} / {{apiResponse.length}}
+          </span>
+        </li>
+        <li>
+          <button type="button" (click)="Proceed()">
+            {{currentPage < apiResponse.length ? 'Próximo' : 'Finalizar' }}
+        </button>
+        </li>
+      </ul>
+    </nav>
+
+        <span *ngIf="noneSelected">Selecione algum campo.</span>
+  </div>
+
+  <div class="quiz-result" [hidden]="!isOver">
+    <h5>Quizz completado!</h5>
+    <hr>
+    <br>
+    <h6>
+      Você acertou {{rightAnswersAmount}} de {{apiResponse.length}} questões
+    </h6>
+    <button type="button" [routerLink]="'/'">Voltar à tela principal</button>
+  </div>
+</div>
