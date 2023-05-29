@@ -2,7 +2,6 @@ export const apiCategories: string[] = [
   'Linux',
   'DevOps',
   'Networking',
-  'Programming',
   'Cloud',
   'Docker',
   'Kubernetes',
