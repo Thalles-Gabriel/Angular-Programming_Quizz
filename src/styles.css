@@ -1,5 +1,9 @@
 @import '../node_modules/@picocss/pico/css/pico.css';
 
+:root {
+  --primary: #c57de9 !important;
+}
+
 * {
   margin: 0;
   padding: 0;
