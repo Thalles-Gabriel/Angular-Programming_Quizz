@@ -1,12 +1,10 @@
 export const apiCategories: string[] = [
   'Linux',
   'DevOps',
-  'Networking',
-  'Cloud',
   'Docker',
-  'Kubernetes',
   'Code',
-  'SQL'
+  'SQL',
+  'CMS'
 ]
 
 export const apiDifficulties:string[] = [
