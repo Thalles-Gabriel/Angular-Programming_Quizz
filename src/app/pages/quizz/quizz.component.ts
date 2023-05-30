@@ -71,7 +71,6 @@ export class QuizzComponent implements OnInit, OnDestroy {
       .subscribe(result => {
         this.apiResponse = result
         this.updateQuestion()
-        console.log(this.apiResponse)
       })
   }
 
@@ -93,7 +92,6 @@ export class QuizzComponent implements OnInit, OnDestroy {
     if (this.currentQuestion.multiple_correct_answers === 'false') {
       this.currentAnswers[0] = field.value
       this.validateAnswers(field.id)
-      console.log(this.rightAnswersAmount)
       return
     }
 

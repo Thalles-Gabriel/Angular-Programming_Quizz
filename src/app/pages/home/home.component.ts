@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
   setCategory(event:Event) {
     const field = event.target as HTMLInputElement
     this.category = field.value
-    console.log(this.category)
   }
 
   setDifficulty(event:Event) {
