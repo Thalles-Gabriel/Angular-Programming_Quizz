@@ -4,7 +4,7 @@
 <div class="container" [hidden]="!currentQuestion">
   <div class="grid" [hidden]="isOver">
     <article class="headings">
-      <h2>{{currentQuestion.category}}</h2>
+      <h2>{{currentQuestion.category || currentQuestion.tags[0].name}}</h2>
       <hr>
       <br>
       <h3>{{currentQuestion.question}}</h3>
