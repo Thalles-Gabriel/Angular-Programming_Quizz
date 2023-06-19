@@ -23,10 +23,5 @@ export type apiData = {
   tip: string,
   category: string,
   difficulty: string,
-  error: string,
-  tags: [
-    {
-      name: string
-    }
-  ]
+  error:string
 }

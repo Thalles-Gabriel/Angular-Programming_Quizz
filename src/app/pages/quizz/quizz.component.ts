@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { apiData } from 'src/app/model/apiModel';
 import { QuizApiService } from 'src/app/services/quiz-api.service';
@@ -23,11 +23,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
   isOver: boolean = false
 
 
-  constructor(
-    private route: ActivatedRoute,
-    private apiService: QuizApiService,
-    private router: Router
-  ) { }
+  constructor(private route: ActivatedRoute, private apiService: QuizApiService) { }
 
   ngOnInit(): void {
     this.Subscribe()
@@ -75,11 +71,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
       .subscribe(result => {
         this.apiResponse = result
         this.updateQuestion()
-      },
-        (error) => {
-          alert('Ocorreu um erro na requisição da API!')
-          this.router.navigate(['/'])
-        })
+      })
   }
 
   Unsubscribe() {
