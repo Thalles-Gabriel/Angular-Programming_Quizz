@@ -14,6 +14,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription = Subscription.EMPTY
   apiQuery: HttpParams = new HttpParams()
   apiResponse$: Observable<apiData[]> | undefined
+  answerArray: string[] = []
   correctAnswerAmount: number = 0
   currentAnswers: string[] = []
   currentIndex: number = 0
@@ -45,6 +46,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
 
   Return() {
     this.currentIndex--
+    this.answerArray.pop()
     this.updateQuestion()
   }
 
@@ -71,18 +73,18 @@ export class QuizzComponent implements OnInit, OnDestroy {
     const field = e.target as HTMLInputElement
 
     if (!field.checked) {
-      this.currentAnswers.filter(value => value !== field.value)
+      this.currentAnswers.filter(value => value !== field.id)
       return
     }
 
     this.noneSelected = false
 
     if (e.type === 'radio') {
-      this.currentAnswers[0] = field.value
+      this.currentAnswers[0] = field.id
       return
     }
 
-    this.currentAnswers.push(field.value)
+    this.currentAnswers.push(field.id)
   }
 
   validateAnswers(question: apiData) {
@@ -90,29 +92,31 @@ export class QuizzComponent implements OnInit, OnDestroy {
       switch (answer) {
         case 'answer_a':
           question.correct_answers.answer_a_correct === 'true'
-            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+            ? this.answerArray.push('correct') : this.answerArray.push('')
           break;
         case 'answer_b':
           question.correct_answers.answer_b_correct === 'true'
-            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+            ? this.answerArray.push('correct') : this.answerArray.push('')
           break;
         case 'answer_c':
           question.correct_answers.answer_c_correct === 'true'
-            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+            ? this.answerArray.push('correct') : this.answerArray.push('')
           break;
         case 'answer_d':
           question.correct_answers.answer_d_correct === 'true'
-            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+            ? this.answerArray.push('correct') : this.answerArray.push('')
           break;
         case 'answer_e':
           question.correct_answers.answer_e_correct === 'true'
-            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+            ? this.answerArray.push('correct') : this.answerArray.push('')
           break;
         case 'answer_f':
           question.correct_answers.answer_f_correct === 'true'
-            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+            ? this.answerArray.push('correct') : this.answerArray.push('')
           break;
       }
     }
+
+    this.correctAnswerAmount = this.answerArray.filter(value => value).length
   }
 }
