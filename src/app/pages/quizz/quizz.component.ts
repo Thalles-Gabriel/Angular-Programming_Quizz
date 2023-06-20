@@ -19,7 +19,10 @@ export class QuizzComponent implements OnInit, OnDestroy {
   currentIndex: number = 0
   noneSelected: boolean = false
 
-  constructor(private route: ActivatedRoute, private apiService: QuizApiService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: QuizApiService,
+  ) { }
 
   ngOnInit(): void {
     this.Subscribe()

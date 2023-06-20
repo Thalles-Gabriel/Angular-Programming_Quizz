@@ -1,27 +1,23 @@
-# AngularQuizz
+# Projeto Angular Quizz
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.2.
+Projeto Angular feito para a trilha Angular Developer da DIO. utilizando tudo o que foi aprendido no bootcamp até então, de simples manipulação de arrays com Javascript à integração e manipulação de dados alimentados por uma REST Api com Angular.
 
-## Development server
+## Descrição 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Este projeto coordena a parametragem e visualização dos dados da API QuizAPI para fornecer um simples porém engajante quizz sobre vários assuntos relacionados à programação e desenvolvimento num geral, desde Linux à DevOps. O intuito foi não somente o aprendizado das tecnologias e principalmente do Angular, mas também fornecer um site realmente utilizável e prazeroso.
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Por meio da interface é possível escolher em qual assunto será o quizz, sua dificuldade e seu limite, e ao fim revelar quantas questões foram acertadas.
 
-## Build
+## Tecnologias
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- API para quizz pré-gerados: [QuizAPI](https://quizapi.io/)
 
-## Running unit tests
+- [Pico.css](https://picocss.com/) para estilização
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Deploy para o GitHub Pages com [angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages)
 
-## Running end-to-end tests
+### Live
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+O site está disponível em: https://thalles-gabriel.github.io/Angular-Quizz/
