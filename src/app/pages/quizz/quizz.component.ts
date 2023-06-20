@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { apiData } from 'src/app/model/apiModel';
 import { QuizApiService } from 'src/app/services/quiz-api.service';
 
@@ -12,16 +12,12 @@ import { QuizApiService } from 'src/app/services/quiz-api.service';
 })
 export class QuizzComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription = Subscription.EMPTY
-  apiSubscription: Subscription = Subscription.EMPTY
   apiQuery: HttpParams = new HttpParams()
-  apiResponse!: apiData[]
-  currentPage: number = 1
-  currentQuestion!: apiData
-  rightAnswersAmount: number = 0
+  apiResponse$: Observable<apiData[]> | undefined
+  correctAnswerAmount: number = 0
   currentAnswers: string[] = []
+  currentIndex: number = 0
   noneSelected: boolean = false
-  isOver: boolean = false
-
 
   constructor(private route: ActivatedRoute, private apiService: QuizApiService) { }
 
@@ -33,29 +29,24 @@ export class QuizzComponent implements OnInit, OnDestroy {
     this.Unsubscribe()
   }
 
-  Proceed() {
-    if(this.currentAnswers.length < 1) {
+  Proceed(currentQuestion: apiData) {
+    if (this.currentAnswers.length < 1) {
       this.noneSelected = true
       return
     }
 
-    if(this.currentPage < this.apiResponse.length) {
-      this.currentPage++
-      this.updateQuestion()
-      return
-    }
-
-    this.isOver = true
+    this.validateAnswers(currentQuestion)
+    this.updateQuestion()
+    this.currentIndex++
   }
 
-  previousQuestion() {
-    this.currentPage--
+  Return() {
+    this.currentIndex--
     this.updateQuestion()
   }
 
   updateQuestion() {
     this.currentAnswers = []
-    this.currentQuestion = this.apiResponse![this.currentPage - 1]
   }
 
   Subscribe() {
@@ -65,69 +56,60 @@ export class QuizzComponent implements OnInit, OnDestroy {
         ['category']: params['category'],
         ['limit']: params['limit']
       })
+      this.apiResponse$ = this.apiService.getQuizz(this.apiQuery)
     })
-
-    this.apiSubscription = this.apiService.getQuizz(this.apiQuery)
-      .subscribe(result => {
-        this.apiResponse = result
-        this.updateQuestion()
-      })
   }
 
   Unsubscribe() {
-    this.apiSubscription.unsubscribe()
     this.routeSubscription.unsubscribe()
   }
 
   selectAnswer(e: Event) {
     const field = e.target as HTMLInputElement
 
-    if(!field.checked){
+    if (!field.checked) {
       this.currentAnswers.filter(value => value !== field.value)
       return
     }
 
     this.noneSelected = false
 
-    if (this.currentQuestion.multiple_correct_answers === 'false') {
+    if (e.type === 'radio') {
       this.currentAnswers[0] = field.value
-      this.validateAnswers(field.id)
       return
     }
 
-      this.currentAnswers.push(field.value)
-      this.validateAnswers(field.id)
-      return
+    this.currentAnswers.push(field.value)
   }
 
-  validateAnswers(answer: string) {
-    switch (answer) {
-      case 'answer_a':
-        this.currentQuestion.correct_answers.answer_a_correct === 'true'
-          ? this.rightAnswersAmount++ : this.rightAnswersAmount = 0
-        break;
-      case 'answer_b':
-        this.currentQuestion.correct_answers.answer_b_correct === 'true'
-          ? this.rightAnswersAmount++ : this.rightAnswersAmount = 0
-        break;
-      case 'answer_c':
-        this.currentQuestion.correct_answers.answer_c_correct === 'true'
-          ? this.rightAnswersAmount++ : this.rightAnswersAmount = 0
-        break;
-      case 'answer_d':
-        this.currentQuestion.correct_answers.answer_d_correct === 'true'
-          ? this.rightAnswersAmount++ : this.rightAnswersAmount = 0
-        break;
-      case 'answer_e':
-        this.currentQuestion.correct_answers.answer_e_correct === 'true'
-          ? this.rightAnswersAmount++ : this.rightAnswersAmount = 0
-        break;
-      case 'answer_f':
-        this.currentQuestion.correct_answers.answer_f_correct === 'true'
-          ? this.rightAnswersAmount++ : this.rightAnswersAmount = 0
-        break;
-      default:
-        break;
+  validateAnswers(question: apiData) {
+    for (const answer of this.currentAnswers) {
+      switch (answer) {
+        case 'answer_a':
+          question.correct_answers.answer_a_correct === 'true'
+            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+          break;
+        case 'answer_b':
+          question.correct_answers.answer_b_correct === 'true'
+            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+          break;
+        case 'answer_c':
+          question.correct_answers.answer_c_correct === 'true'
+            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+          break;
+        case 'answer_d':
+          question.correct_answers.answer_d_correct === 'true'
+            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+          break;
+        case 'answer_e':
+          question.correct_answers.answer_e_correct === 'true'
+            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+          break;
+        case 'answer_f':
+          question.correct_answers.answer_f_correct === 'true'
+            ? this.correctAnswerAmount++ : this.correctAnswerAmount = 0
+          break;
+      }
     }
   }
 }

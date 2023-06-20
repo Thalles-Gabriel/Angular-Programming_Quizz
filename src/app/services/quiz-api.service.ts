@@ -1,6 +1,7 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { apiData } from '../model/apiModel';
 
@@ -8,21 +9,22 @@ import { apiData } from '../model/apiModel';
   providedIn: 'root'
 })
 export class QuizApiService {
-  private apiUrl:string = 'https://quizapi.io/api/v1/questions'
-  private data!: Observable<apiData[]>
+  private apiUrl: string = 'https://quizapi.io/api/v1/questions'
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   getQuizz(queryParameters:HttpParams): Observable<apiData[]> {
-    const getHeaders = new HttpHeaders().set('X-Api-Key', environment.apiKey)
-    this.data = this.http.get<apiData[]>(
+    const header = new HttpHeaders().set('X-Api-Key', environment.apiKey)
+    return this.http.get<apiData[]>(
       this.apiUrl,
       {
-        headers: getHeaders,
+        headers: header,
         params: queryParameters
-      })
-
-    return this.data
+      }).pipe(catchError((err: HttpErrorResponse) => {
+        alert('Erro: ' + err.statusText)
+        this.router.navigate(['/'])
+        return throwError('Error ao acessar a API')
+      }))
   }
 
 }
